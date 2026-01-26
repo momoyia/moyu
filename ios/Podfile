@@ -46,6 +46,27 @@ post_install do |installer|
         'PERMISSION_CAMERA=1',
         'PERMISSION_PHOTOS=1',
       ]
+      # Fix Swift optimization level for Debug builds
+      if config.name == 'Debug'
+        config.build_settings['SWIFT_OPTIMIZATION_LEVEL'] = '-Onone'
+      end
+      # Disable bitcode
+      config.build_settings['ENABLE_BITCODE'] = 'NO'
+      # Support arm64 architecture for real devices
+      config.build_settings['ARCHS'] = 'arm64'
+      # Only exclude arm64 for simulator on Intel Macs
+      config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "i386"
+      # Enable arm64 simulator support for Apple Silicon
+      config.build_settings['VALID_ARCHS'] = 'arm64 arm64e'
+    end
+  end
+  
+  # Fix file permissions
+  installer.pods_project.targets.each do |target|
+    target.build_phases.each do |phase|
+      if phase.is_a?(Xcodeproj::Project::Object::PBXShellScriptBuildPhase)
+        phase.shell_path = '/bin/sh'
+      end
     end
   end
 end
