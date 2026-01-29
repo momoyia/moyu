@@ -6,6 +6,8 @@ import 'blocked_users_screen.dart';
 import 'hidden_content_screen.dart';
 import 'feedback_screen.dart';
 import 'login_screen.dart';
+import 'coin_store_screen.dart';
+import 'youth_mode_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -15,21 +17,12 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  bool _youthMode = false;
   bool _pushNotifications = true;
   bool _locationServices = true;
 
   @override
   void initState() {
     super.initState();
-    _loadSettings();
-  }
-
-  Future<void> _loadSettings() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _youthMode = prefs.getBool('youth_mode') ?? false;
-    });
   }
 
   @override
@@ -57,6 +50,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
         children: [
           // 账户与隐私
           _SectionHeader(title: '账户与隐私'),
+          _SettingsTile(
+            icon: Icons.account_balance_wallet_rounded,
+            title: '金币商店',
+            subtitle: '购买金币，畅享更多功能',
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CoinStoreScreen(),
+                ),
+              );
+            },
+          ),
           _SettingsTile(
             icon: Icons.block,
             title: '拉黑管理',
@@ -115,19 +121,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
           // 安全模式
           _SectionHeader(title: '安全模式'),
-          _SwitchTile(
+          _SettingsTile(
             icon: Icons.child_care,
             title: '青少年模式',
-            subtitle: '开启后将过滤不适宜内容',
-            value: _youthMode,
-            onChanged: (value) async {
-              setState(() {
-                _youthMode = value;
-              });
-              // 保存到 SharedPreferences
-              final prefs = await SharedPreferences.getInstance();
-              await prefs.setBool('youth_mode', value);
-              _showYouthModeDialog(value);
+            subtitle: '内容过滤和购买保护',
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => YouthModeScreen(),
+                ),
+              );
             },
           ),
 
@@ -235,26 +239,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
         );
       }
     }
-  }
-
-  void _showYouthModeDialog(bool enabled) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(enabled ? '开启青少年模式' : '关闭青少年模式'),
-        content: Text(
-          enabled
-              ? '开启青少年模式后，系统将自动过滤不适宜内容，为您提供更安全的浏览环境。'
-              : '关闭青少年模式后，您将看到完整的内容。',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text('确定'),
-          ),
-        ],
-      ),
-    );
   }
 
   void _showHelpDialog() {

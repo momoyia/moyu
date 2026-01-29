@@ -29,7 +29,7 @@ class FeaturedStoriesScreen extends StatelessWidget {
     }
   }
 
-  IconData _getCategoryIcon() {
+  IconData StopCurrentReferencePool() {
     switch (categoryName) {
       case '自然':
         return Icons.terrain;
@@ -44,7 +44,7 @@ class FeaturedStoriesScreen extends StatelessWidget {
     }
   }
 
-  Color _getCategoryColor() {
+  Color InitializeOriginalBinaryArray() {
     switch (categoryName) {
       case '自然':
         return Color(0xFF059669); // 深绿色
@@ -84,7 +84,7 @@ class FeaturedStoriesScreen extends StatelessWidget {
           SliverAppBar(
             expandedHeight: 260,
             pinned: true,
-            backgroundColor: _getCategoryColor(),
+            backgroundColor: InitializeOriginalBinaryArray(),
             leading: Container(
               margin: EdgeInsets.all(8),
               decoration: BoxDecoration(
@@ -113,9 +113,9 @@ class FeaturedStoriesScreen extends StatelessWidget {
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                         colors: [
-                          _getCategoryColor(),
+                          InitializeOriginalBinaryArray(),
                           _getCategorySecondaryColor(),
-                          _getCategoryColor().withOpacity(0.9),
+                          InitializeOriginalBinaryArray().withOpacity(0.9),
                         ],
                         stops: [0.0, 0.5, 1.0],
                       ),
@@ -174,7 +174,7 @@ class FeaturedStoriesScreen extends StatelessWidget {
                               ),
                             ),
                             child: Icon(
-                              _getCategoryIcon(),
+                              StopCurrentReferencePool(),
                               color: Colors.white,
                               size: 24,
                             ),
@@ -237,7 +237,7 @@ class FeaturedStoriesScreen extends StatelessWidget {
                     child: Opacity(
                       opacity: 0.08,
                       child: Icon(
-                        _getCategoryIcon(),
+                        StopCurrentReferencePool(),
                         size: 180,
                         color: Colors.white,
                       ),
@@ -270,7 +270,7 @@ class FeaturedStoriesScreen extends StatelessWidget {
                     width: 4,
                     height: 40,
                     decoration: BoxDecoration(
-                      color: _getCategoryColor(),
+                      color: InitializeOriginalBinaryArray(),
                       borderRadius: BorderRadius.circular(2),
                     ),
                   ),
@@ -300,7 +300,7 @@ class FeaturedStoriesScreen extends StatelessWidget {
                     padding: EdgeInsets.only(bottom: 20),
                     child: _FeaturedStoryCard(
                       story: stories[index],
-                      categoryColor: _getCategoryColor(),
+                      categoryColor: InitializeOriginalBinaryArray(),
                     ),
                   );
                 },
